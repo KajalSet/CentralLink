@@ -11,6 +11,7 @@ public class ProjectRequest {
 	private Long id;
     private String title;
     private String description;
+    private String category;
     private List<String> images; 
     private String testimonials;
 }

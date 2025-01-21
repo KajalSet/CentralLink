@@ -3,6 +3,7 @@ package com.CentralLink.admin.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,13 +23,14 @@ public class ProjectEntity {
 	
 	 
     private String title;
-	 
+	  
 	 
     private String description;
-	 
+    
+    private String category;
 	
-	 @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	 private List<ProjectImage> images;
+    @ElementCollection // Allows storing a list of strings directly
+    private List<String> images;
 
 	   
 	    private String testimonials;
