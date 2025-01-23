@@ -22,9 +22,11 @@ import com.CentralLink.admin.auth.User;
 import com.CentralLink.admin.auth.UserRepo;
 import com.CentralLink.admin.exception.RecordNotFoundException;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "User Authentication", description = "APIs for User Authentication related operations")
 public class AuthController {
 	
 	
