@@ -7,7 +7,7 @@ import lombok.Data;
 public class BlogRequest {
 	private String title;
     private String content;
-    private Long categoryId;  // Category ID instead of category name
-    private String image;
+    private String category; 
+    private List<String> image;
     private List<String> tags;
 }

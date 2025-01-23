@@ -8,52 +8,58 @@ import org.springframework.stereotype.Service;
 
 import com.CentralLink.admin.entity.ServiceEntity;
 import com.CentralLink.admin.repository.ServiceRepository;
+import com.CentralLink.admin.request.ServiceRequest;
 
 @Service
 public class ServiceImpl implements ServiceService {
 	@Autowired
     private ServiceRepository serviceRepository;
-	public ServiceEntity createService(String name, String description, String category, String imageFile) {
+	
+	
+	
+	
+	
+	@Override
+    public ServiceEntity createService(ServiceRequest serviceRequest) {
         ServiceEntity serviceEntity = new ServiceEntity();
-        serviceEntity.setName(name);
-        serviceEntity.setDescription(description);
-        serviceEntity.setCategory(category);
+        serviceEntity.setName(serviceRequest.getName());
+        serviceEntity.setDescription(serviceRequest.getDescription());
+        serviceEntity.setCategory(serviceRequest.getCategory());
         serviceEntity.setCreatedDate(LocalDateTime.now());
-
-        
-        serviceEntity.setImageUrl(imageFile);
+        serviceEntity.setImages(serviceRequest.getImages()); // Set multiple images
 
         return serviceRepository.save(serviceEntity);
     }
 
-    public ServiceEntity updateService(Long id, String name, String description, String category, String imageFile) {
+    @Override
+    public ServiceEntity updateService(Long id, ServiceRequest serviceRequest) {
         ServiceEntity serviceEntity = serviceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Service not found"));
 
-        serviceEntity.setName(name);
-        serviceEntity.setDescription(description);
-        serviceEntity.setCategory(category);
-
-        
-        if (imageFile != null && !imageFile.isEmpty()) {
-            serviceEntity.setImageUrl(imageFile);
-        }
+        serviceEntity.setName(serviceRequest.getName());
+        serviceEntity.setDescription(serviceRequest.getDescription());
+        serviceEntity.setCategory(serviceRequest.getCategory());
+        serviceEntity.setImages(serviceRequest.getImages()); // Update images
 
         return serviceRepository.save(serviceEntity);
     }
 
+    @Override
     public void deleteService(Long id) {
         serviceRepository.deleteById(id);
     }
 
+    @Override
     public List<ServiceEntity> getAllServices() {
         return serviceRepository.findAll();
     }
 
+    @Override
     public List<ServiceEntity> getServicesByCategory(String category) {
         return serviceRepository.findByCategory(category);
     }
 
+    @Override
     public ServiceEntity getServiceById(Long id) {
         return serviceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Service not found"));

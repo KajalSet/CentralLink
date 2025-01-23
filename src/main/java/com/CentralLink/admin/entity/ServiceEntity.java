@@ -1,8 +1,10 @@
 package com.CentralLink.admin.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +22,9 @@ public class ServiceEntity {
     private String description;
     private String category;
 
-    @Column(name = "image_url", columnDefinition = "TEXT")
-    private String imageUrl; // This will store the image as a normal string (e.g., file name)
+    
+    @ElementCollection // Allows storing a list of strings
+    private List<String> images;
 
     private LocalDateTime createdDate;
 }
