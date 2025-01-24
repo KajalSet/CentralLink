@@ -15,14 +15,23 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Autowired
 	PrivilegeInterceptor privilegeInterceptor;
-
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
-	}
+//
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/**").allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
+//	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(privilegeInterceptor).excludePathPatterns("/v3/api-docs", "/v3/api-docs/*",
 				"/swagger-ui.html", "/swagger-ui/**", "/static/**", "/api/auth/sendpdf", "/js/**", "/webjars/**");
 	}
+	
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")  // Apply to all endpoints
+                .allowedOrigins("http://localhost:3000")  // Frontend URL
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Allowed methods
+                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")  // Allowed headers
+                .allowCredentials(true);  // Allow cookies/credentials
+    }
 }
