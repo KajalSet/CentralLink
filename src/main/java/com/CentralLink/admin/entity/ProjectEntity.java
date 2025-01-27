@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
-import com.CentralLink.admin.auth.BaseEntity;
+import com.CentralLink.admin.model.common.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;

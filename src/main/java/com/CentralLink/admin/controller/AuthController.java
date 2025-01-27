@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.CentralLink.admin.auth.AuthenticationRequest;
-import com.CentralLink.admin.auth.AuthenticationResponse;
-import com.CentralLink.admin.auth.CurrentUser;
-import com.CentralLink.admin.auth.JdbcUserDetailsService;
-import com.CentralLink.admin.auth.JwtUtil;
-import com.CentralLink.admin.auth.RefreshToken;
-import com.CentralLink.admin.auth.RefreshTokenService;
-import com.CentralLink.admin.auth.User;
-import com.CentralLink.admin.auth.UserRepo;
+import com.CentralLink.admin.config.CurrentUser;
+import com.CentralLink.admin.config.JdbcUserDetailsService;
 import com.CentralLink.admin.exception.RecordNotFoundException;
+import com.CentralLink.admin.model.auth.RefreshToken;
+import com.CentralLink.admin.model.auth.User;
+import com.CentralLink.admin.pojo.request.AuthenticationRequest;
+import com.CentralLink.admin.pojo.response.AuthenticationResponse;
+import com.CentralLink.admin.repositories.auth.UserRepo;
+import com.CentralLink.admin.service.auth.JwtUtil;
+import com.CentralLink.admin.service.auth.RefreshTokenService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin(origins = "*")
