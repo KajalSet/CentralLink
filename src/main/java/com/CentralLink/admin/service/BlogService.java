@@ -20,7 +20,7 @@ public class BlogService {
 	public Blog createBlog(String categoryName, String title, String shortDescription, String mainDescription,
 			MultipartFile photo) throws IOException {
 		byte[] photoBytes = photo.getBytes();
-		Blog blog = new Blog(categoryName, title, shortDescription, mainDescription, photoBytes);
+		Blog blog = new Blog();
 		return blogRepository.save(blog);
 	}
 

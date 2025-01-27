@@ -47,14 +47,14 @@ public class Blog {
 	// Constructors, getters, and setters
 	public Blog() {
 	}
-
-	public Blog(String categoryName, String title, String shortDescription, String mainDescription, byte[] photo) {
-		this.categoryName = categoryName;
-		this.title = title;
-		this.shortDescription = shortDescription;
-		this.mainDescription = mainDescription;
-		this.photo = photo;
-	}
+//
+//	public Blog(String categoryName, String title, String shortDescription, String mainDescription, byte[] photo) {
+//		this.categoryName = categoryName;
+//		this.title = title;
+//		this.shortDescription = shortDescription;
+//		this.mainDescription = mainDescription;
+//		this.photo = photo;
+//	}
 
 	public Long getId() {
 		return id;

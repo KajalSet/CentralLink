@@ -44,16 +44,16 @@ public class Services {
 	private byte[] photo; // For storing the uploaded photo
 
 	// Constructors, getters, and setters
-	public Services() {
-	}
-
-	public Services(String title, byte[] icon, String shortDescription, String mainDescription, byte[] photo) {
-		this.title = title;
-		this.icon = icon;
-		this.shortDescription = shortDescription;
-		this.mainDescription = mainDescription;
-		this.photo = photo;
-	}
+//	public Services() {
+//	}
+//
+//	public Services(String title, byte[] icon, String shortDescription, String mainDescription, byte[] photo) {
+//		this.title = title;
+//		this.icon = icon;
+//		this.shortDescription = shortDescription;
+//		this.mainDescription = mainDescription;
+//		this.photo = photo;
+//	}
 
 	// Getters and Setters
 	public Long getId() {

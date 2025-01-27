@@ -44,12 +44,12 @@ public class Settings {
 	private String linkedinUrl;
 
 	// Constructors
-	public Settings(String enquiryEmail, String facebookUrl, String instagramUrl, String linkedinUrl) {
-		this.enquiryEmail = enquiryEmail;
-		this.facebookUrl = facebookUrl;
-		this.instagramUrl = instagramUrl;
-		this.linkedinUrl = linkedinUrl;
-	}
+//	public Settings(String enquiryEmail, String facebookUrl, String instagramUrl, String linkedinUrl) {
+//		this.enquiryEmail = enquiryEmail;
+//		this.facebookUrl = facebookUrl;
+//		this.instagramUrl = instagramUrl;
+//		this.linkedinUrl = linkedinUrl;
+//	}
 
 	public Long getId() {
 		return id;

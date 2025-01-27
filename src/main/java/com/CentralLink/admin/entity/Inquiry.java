@@ -45,18 +45,18 @@ public class Inquiry {
 	public Inquiry() {
 	}
 
-	public Inquiry(Long id,
-			@NotBlank(message = "Name is required") @Size(max = 255, message = "Name cannot be more than 255 characters") String name,
-			@NotBlank(message = "Email is required") @Email(message = "Email should be valid") String email,
-			Services services,
-			@NotBlank(message = "Message is required") @Size(max = 5000, message = "Message cannot be more than 1000 words (5000 characters)") String message) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.serviceName = serviceName;
-		this.message = message;
-	}
+//	public Inquiry(Long id,
+//			@NotBlank(message = "Name is required") @Size(max = 255, message = "Name cannot be more than 255 characters") String name,
+//			@NotBlank(message = "Email is required") @Email(message = "Email should be valid") String email,
+//			Services services,
+//			@NotBlank(message = "Message is required") @Size(max = 5000, message = "Message cannot be more than 1000 words (5000 characters)") String message) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.email = email;
+//		this.serviceName = serviceName;
+//		this.message = message;
+//	}
 
 	public Long getId() {
 		return id;

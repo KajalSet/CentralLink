@@ -34,11 +34,11 @@ public class Project {
 
 	public Project() {
 	}
-
-	public Project(String categoryName, byte[] photo) {
-		this.categoryName = categoryName;
-		this.photo = photo;
-	}
+//
+//	public Project(String categoryName, byte[] photo) {
+//		this.categoryName = categoryName;
+//		this.photo = photo;
+//	}
 
 	public Long getId() {
 		return id;
