@@ -11,12 +11,11 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Project {
@@ -32,13 +31,10 @@ public class Project {
 	@Lob
 	private byte[] photo;
 
-	public Project() {
+	public Project(String categoryName, byte[] photo) {
+		this.categoryName = categoryName;
+		this.photo = photo;
 	}
-//
-//	public Project(String categoryName, byte[] photo) {
-//		this.categoryName = categoryName;
-//		this.photo = photo;
-//	}
 
 	public Long getId() {
 		return id;

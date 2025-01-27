@@ -44,9 +44,7 @@ public class Blog {
 	@Lob
 	private byte[] photo; // For storing the uploaded image
 
-	// Constructors, getters, and setters
-	public Blog() {
-	}
+	
 //
 //	public Blog(String categoryName, String title, String shortDescription, String mainDescription, byte[] photo) {
 //		this.categoryName = categoryName;
