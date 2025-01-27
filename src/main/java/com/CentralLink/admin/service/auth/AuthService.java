@@ -46,8 +46,8 @@ public class AuthService {
 //	@Value("${app.distributorRoleName}")
 //	private String distributorRoleName;
 
-	@Autowired
-	private WebClientService webClinetService;
+//	@Autowired
+//	private WebClientService webClinetService;
 
 	@Autowired
 	private UserRepo userRepo;
@@ -413,46 +413,46 @@ public class AuthService {
 		return true;
 	}
 
-	public SignupResponse validateUser(LoginRequest loginRequest) {
-		SignupResponse response = new SignupResponse();
-
-		try {
-
-			Optional<Profile> existingUser = profileRepo.findByphone(loginRequest.getMobileNumber());
-			if (existingUser.isPresent()) {
-				// send otp
-
-				// response = webClient.sendOTP(loginRequest.getMobileNumber());
-
-				// Mock
-				response = webClinetService.mockSignupResponse();
-
-				// checking if mpin exists
-//				if (existingUser.get().getMpin() != null) {
-//					response.setIsMPINExists(true);
-//				}
-
-				// checking if profile exists
-				Optional<Profile> existingProfile = profileRepo.findById(existingUser.get().getId());
-//				if (existingProfile != null) {
-//					response.setIsProfileExists(true);
-//				}
-
-			} else {
-				// create user and send otp
-				Profile newUser = createUser(loginRequest);
-				// response = webClient.sendOTP(newUser.getPrimaryMobile());
-
-				// Mock
-				response = webClinetService.mockSignupResponse();
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return response;
-
-	}
+//	public SignupResponse validateUser(LoginRequest loginRequest) {
+//		SignupResponse response = new SignupResponse();
+//
+//		try {
+//
+//			Optional<Profile> existingUser = profileRepo.findByphone(loginRequest.getMobileNumber());
+//			if (existingUser.isPresent()) {
+//				// send otp
+//
+//				// response = webClient.sendOTP(loginRequest.getMobileNumber());
+//
+//				// Mock
+//				response = webClinetService.mockSignupResponse();
+//
+//				// checking if mpin exists
+////				if (existingUser.get().getMpin() != null) {
+////					response.setIsMPINExists(true);
+////				}
+//
+//				// checking if profile exists
+//				Optional<Profile> existingProfile = profileRepo.findById(existingUser.get().getId());
+////				if (existingProfile != null) {
+////					response.setIsProfileExists(true);
+////				}
+//
+//			} else {
+//				// create user and send otp
+//				Profile newUser = createUser(loginRequest);
+//				// response = webClient.sendOTP(newUser.getPrimaryMobile());
+//
+//				// Mock
+//				response = webClinetService.mockSignupResponse();
+//
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return response;
+//
+//	}
 }
