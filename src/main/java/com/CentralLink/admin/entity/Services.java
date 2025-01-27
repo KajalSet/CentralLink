@@ -19,43 +19,43 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Blog {
+public class Services {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "Category name cannot be empty")
-	@Size(max = 255)
-	private String categoryName;
-
 	@NotBlank(message = "Title cannot be empty")
 	@Size(max = 255)
 	private String title;
 
+	@Lob
+	private byte[] icon; // For storing the uploaded icon image
+
 	@NotBlank(message = "Short description cannot be empty")
-	@Size(max = 1000)
+	@Size(max = 1000) // Adjusting to ~200 words (~1000 characters)
 	private String shortDescription;
 
 	@NotBlank(message = "Main description cannot be empty")
-	@Size(max = 3000) // Around 500 words (3000 characters)
+	@Size(max = 3000) // Adjusting to ~500 words (~3000 characters)
 	private String mainDescription;
 
 	@Lob
-	private byte[] photo; // For storing the uploaded image
+	private byte[] photo; // For storing the uploaded photo
 
 	// Constructors, getters, and setters
-	public Blog() {
+	public Services() {
 	}
 
-	public Blog(String categoryName, String title, String shortDescription, String mainDescription, byte[] photo) {
-		this.categoryName = categoryName;
+	public Services(String title, byte[] icon, String shortDescription, String mainDescription, byte[] photo) {
 		this.title = title;
+		this.icon = icon;
 		this.shortDescription = shortDescription;
 		this.mainDescription = mainDescription;
 		this.photo = photo;
 	}
 
+	// Getters and Setters
 	public Long getId() {
 		return id;
 	}
@@ -64,20 +64,20 @@ public class Blog {
 		this.id = id;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public byte[] getIcon() {
+		return icon;
+	}
+
+	public void setIcon(byte[] icon) {
+		this.icon = icon;
 	}
 
 	public String getShortDescription() {

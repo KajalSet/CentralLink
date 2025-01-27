@@ -1,37 +1,45 @@
 package com.CentralLink.admin.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.CentralLink.admin.entity.ProjectEntity;
-import com.CentralLink.admin.request.ProjectRequest;
+import com.CentralLink.admin.entity.Project;
+import com.CentralLink.admin.repository.ProjectRepository;
 
-public interface ProjectService {
+@Service
+public class ProjectService {
 
-	
+	@Autowired
+	private ProjectRepository categoryRepository;
 
-	
+	public Project createCategory(String categoryName, MultipartFile file) throws IOException {
+		byte[] photoBytes = file.getBytes();
+		Project category = new Project(categoryName, photoBytes);
+		return categoryRepository.save(category);
+	}
 
-	List<ProjectEntity> getAllProjects();
+	public List<Project> getAllCategories() {
+		return categoryRepository.findAll();
+	}
 
-	boolean deleteProject(Long id);
+	public Optional<Project> getCategoryById(Long id) {
+		return categoryRepository.findById(id);
+	}
 
-	ProjectEntity getProjectById(Long id);
+	public Project updateCategory(Long id, String categoryName, MultipartFile file) throws IOException {
+		Project category = categoryRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Category not found"));
+		category.setCategoryName(categoryName);
+		category.setPhoto(file.getBytes());
+		return categoryRepository.save(category);
+	}
 
-	ProjectEntity createProject(ProjectRequest request);
-
-	List<ProjectEntity> getProjectsByCategory(String category);
-
-	ProjectEntity updateProject(Long id, ProjectRequest request);
-
-	
-
-	
-
-//	List<ProjectEntity> getAllProjects();
-//
-//	Optional<ProjectEntity> getProjectById(Long id);
-
+	public void deleteCategory(Long id) {
+		categoryRepository.deleteById(id);
+	}
 }
