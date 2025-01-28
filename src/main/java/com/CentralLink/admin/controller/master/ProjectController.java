@@ -44,27 +44,36 @@ public class ProjectController {
 	}
 
 	@GetMapping
-	public List<Project> getAllCategories() {
-		return categoryService.getAllCategories();
+	public ResponseEntity<?> getAllCategories() {
+		try {
+			List<Project> categories = categoryService.getAllCategories();
+			if (categories.isEmpty()) {
+				log.warn("No categories found.");
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No projects found in the database.");
+			}
+			return ResponseEntity.ok(categories);
+		} catch (Exception e) {
+			log.error("Error getting all projects: {}", e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("An error occurred while fetching the projects: " + e.getMessage());
+		}
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Project> getCategoryById(@PathVariable Long id) {
-	    try {
-	        log.info("Fetching category with ID: {}", id);
-	        Optional<Project> category = categoryService.getCategoryById(id);
-	        if (category.isEmpty()) {
-	            log.warn("Category with ID {} not found", id);
-	            return ResponseEntity.notFound().build();
-	        }
-	        return ResponseEntity.ok(category.get());
-	    } catch (Exception e) {
-	        log.error("Error fetching category with ID: {}. Exception: {}", id, e.getMessage(), e);
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                             .body(null);  // Return a 500 if an unexpected error occurs
-	    }
+	public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+		try {
+			Optional<Project> category = categoryService.getCategoryById(id);
+			if (category.isEmpty()) {
+				log.warn("Category with ID {} not found.", id);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Project with ID " + id + " not found.");
+			}
+			return ResponseEntity.ok(category.get());
+		} catch (Exception e) {
+			log.error("Error fetching project with ID {}: {}", id, e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("An error occurred while fetching the project: " + e.getMessage());
+		}
 	}
-
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Project> updateCategory(@PathVariable Long id, @RequestParam String categoryName,
