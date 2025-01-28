@@ -31,10 +31,14 @@ public class Project {
 	@Lob
 	private byte[] photo;
 
-	public Project(String categoryName, byte[] photo) {
-		this.categoryName = categoryName;
-		this.photo = photo;
-	}
+	public Project() {
+    }
+
+    // Parameterized constructor (you already have this)
+    public Project(String categoryName, byte[] photo) {
+        this.categoryName = categoryName;
+        this.photo = photo;
+    }
 
 	public Long getId() {
 		return id;
