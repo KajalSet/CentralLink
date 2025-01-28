@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +34,8 @@ public class ProjectController {
 	@Autowired
 	private ProjectService categoryService;
 
+	private static final Logger log = LoggerFactory.getLogger(ProjectController.class);
+
 	@PostMapping
 	public ResponseEntity<Project> createCategory(@RequestParam String categoryName,
 			@RequestParam("photo") MultipartFile file) throws IOException {
@@ -45,9 +50,21 @@ public class ProjectController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Project> getCategoryById(@PathVariable Long id) {
-		Optional<Project> category = categoryService.getCategoryById(id);
-		return category.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	    try {
+	        log.info("Fetching category with ID: {}", id);
+	        Optional<Project> category = categoryService.getCategoryById(id);
+	        if (category.isEmpty()) {
+	            log.warn("Category with ID {} not found", id);
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok(category.get());
+	    } catch (Exception e) {
+	        log.error("Error fetching category with ID: {}. Exception: {}", id, e.getMessage(), e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                             .body(null);  // Return a 500 if an unexpected error occurs
+	    }
 	}
+
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Project> updateCategory(@PathVariable Long id, @RequestParam String categoryName,
