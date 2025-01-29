@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.CentralLink.admin.entity.Inquiry;
 import com.CentralLink.admin.entity.Services;
+import com.CentralLink.admin.exception.GenericException;
+import com.CentralLink.admin.repository.InquiryRepository;
 import com.CentralLink.admin.repository.ServiceRepository;
 
 @Service
@@ -16,6 +19,9 @@ public class ServicesService {
 
 	@Autowired
 	private ServiceRepository serviceRepository;
+
+	@Autowired
+	private InquiryRepository inquiryRepository;
 
 	public Services createService(String title, MultipartFile icon, String shortDescription, String mainDescription,
 			MultipartFile photo) throws IOException {
@@ -45,15 +51,18 @@ public class ServicesService {
 	}
 
 	public void deleteService(Long id) {
-		try {
-			// Add a log before the delete operation
-			System.out.println("Attempting to delete service with ID: " + id);
+		Optional<Services> service = serviceRepository.findById(id);
+		if (service.isPresent()) {
+			// First, delete related Inquiries
+			List<Inquiry> inquiries = inquiryRepository.findByServiceName(service.get());
+			for (Inquiry inquiry : inquiries) {
+				inquiryRepository.delete(inquiry);
+			}
+
+			// Now delete the Service
 			serviceRepository.deleteById(id);
-			System.out.println("Service with ID " + id + " deleted successfully.");
-		} catch (Exception e) {
-			// Log the error and rethrow if needed
-			System.err.println("Error deleting service with ID " + id + ": " + e.getMessage());
-			throw e; // Or handle it accordingly
+		} else {
+			throw new GenericException("Service not found with id: " + id);
 		}
 	}
 
