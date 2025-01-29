@@ -20,7 +20,16 @@ public class BlogService {
 	public Blog createBlog(String categoryName, String title, String shortDescription, String mainDescription,
 			MultipartFile photo) throws IOException {
 		byte[] photoBytes = photo.getBytes();
+
+// Create and populate the Blog object
 		Blog blog = new Blog();
+		blog.setCategoryName(categoryName);
+		blog.setTitle(title);
+		blog.setShortDescription(shortDescription);
+		blog.setMainDescription(mainDescription);
+		blog.setPhoto(photoBytes); // assuming you have a field of type byte[] for photo
+
+// Save the Blog object
 		return blogRepository.save(blog);
 	}
 
