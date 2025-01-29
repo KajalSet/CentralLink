@@ -1,5 +1,6 @@
 package com.CentralLink.admin.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class Inquiry {
 	@Email(message = "Email should be valid")
 	private String email;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Services serviceName;
 
 	@NotBlank(message = "Message is required")
