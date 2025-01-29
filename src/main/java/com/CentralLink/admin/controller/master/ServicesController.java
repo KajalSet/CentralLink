@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.CentralLink.admin.entity.Services;
+import com.CentralLink.admin.exception.GenericException;
 import com.CentralLink.admin.service.ServicesService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -60,8 +63,23 @@ public class ServicesController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteService(@PathVariable Long id) {
-		serviceService.deleteService(id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<String> deleteService(@PathVariable Long id) {
+	    try {
+	        serviceService.deleteService(id);
+	        return ResponseEntity.noContent().build();  // 204 No Content
+	    } catch (GenericException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body("Service with ID " + id + " not found.");
+	    } catch (DataIntegrityViolationException e) {
+	        // This exception is thrown in case of foreign key constraint violations or other DB issues
+	        return ResponseEntity.status(HttpStatus.CONFLICT)
+	                .body("Unable to delete service due to data integrity violation.");
+	    } catch (Exception e) {
+	        // Catch any other generic errors
+	        e.printStackTrace();  // Log the exception stack trace
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("An error occurred while deleting the service: " + e.getMessage());
+	    }
 	}
+
 }

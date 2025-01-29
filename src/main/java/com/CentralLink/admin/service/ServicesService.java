@@ -45,6 +45,16 @@ public class ServicesService {
 	}
 
 	public void deleteService(Long id) {
-		serviceRepository.deleteById(id);
+		try {
+			// Add a log before the delete operation
+			System.out.println("Attempting to delete service with ID: " + id);
+			serviceRepository.deleteById(id);
+			System.out.println("Service with ID " + id + " deleted successfully.");
+		} catch (Exception e) {
+			// Log the error and rethrow if needed
+			System.err.println("Error deleting service with ID " + id + ": " + e.getMessage());
+			throw e; // Or handle it accordingly
+		}
 	}
+
 }
