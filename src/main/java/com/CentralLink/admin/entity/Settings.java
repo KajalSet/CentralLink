@@ -31,11 +31,11 @@ public class Settings {
 	@NotBlank(message = "Enquiry email is required")
 	private String enquiryEmail;
 
-	@Size(max = 255, message = "Facebook URL cannot be more than 255 characters")
-	@Pattern(regexp = "^(https?://)?(www\\.)?facebook\\.com/.+$", message = "Invalid Facebook URL format")
+//	@Size(max = 255, message = "Facebook URL cannot be more than 255 characters")
+//	@Pattern(regexp = "^(https?://)?(www\\.)?facebook\\.com/.+$", message = "Invalid Facebook URL format")
 	private String facebookUrl;
 
-	@Size(max = 255, message = "Instagram URL cannot be more than 255 characters")
+	//@Size(max = 255, message = "Instagram URL cannot be more than 255 characters")
 	//@Pattern(regexp = "^(https?://)?(www\\.)?instagram\\.com/.+$", message = "Invalid Instagram URL format")
 	private String instagramUrl;
 
