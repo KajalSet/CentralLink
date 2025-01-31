@@ -1,6 +1,5 @@
 package com.CentralLink.admin.entity;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,29 +26,10 @@ public class Settings {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Email(message = "Enquiry email should be a valid email address")
-	@NotBlank(message = "Enquiry email is required")
 	private String enquiryEmail;
-
-//	@Size(max = 255, message = "Facebook URL cannot be more than 255 characters")
-//	@Pattern(regexp = "^(https?://)?(www\\.)?facebook\\.com/.+$", message = "Invalid Facebook URL format")
 	private String facebookUrl;
-
-	//@Size(max = 255, message = "Instagram URL cannot be more than 255 characters")
-	//@Pattern(regexp = "^(https?://)?(www\\.)?instagram\\.com/.+$", message = "Invalid Instagram URL format")
 	private String instagramUrl;
-
-	@Size(max = 255, message = "LinkedIn URL cannot be more than 255 characters")
-	//@Pattern(regexp = "^(https?://)?(www\\.)?linkedin\\.com/.+$", message = "Invalid LinkedIn URL format")
 	private String linkedinUrl;
-
-	// Constructors
-//	public Settings(String enquiryEmail, String facebookUrl, String instagramUrl, String linkedinUrl) {
-//		this.enquiryEmail = enquiryEmail;
-//		this.facebookUrl = facebookUrl;
-//		this.instagramUrl = instagramUrl;
-//		this.linkedinUrl = linkedinUrl;
-//	}
 
 	public Long getId() {
 		return id;
@@ -91,5 +71,4 @@ public class Settings {
 		this.linkedinUrl = linkedinUrl;
 	}
 
-	
 }
