@@ -36,11 +36,11 @@ public class Settings {
 	private String facebookUrl;
 
 	@Size(max = 255, message = "Instagram URL cannot be more than 255 characters")
-	@Pattern(regexp = "^(https?://)?(www\\.)?instagram\\.com/.+$", message = "Invalid Instagram URL format")
+	//@Pattern(regexp = "^(https?://)?(www\\.)?instagram\\.com/.+$", message = "Invalid Instagram URL format")
 	private String instagramUrl;
 
 	@Size(max = 255, message = "LinkedIn URL cannot be more than 255 characters")
-	@Pattern(regexp = "^(https?://)?(www\\.)?linkedin\\.com/.+$", message = "Invalid LinkedIn URL format")
+	//@Pattern(regexp = "^(https?://)?(www\\.)?linkedin\\.com/.+$", message = "Invalid LinkedIn URL format")
 	private String linkedinUrl;
 
 	// Constructors
