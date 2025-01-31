@@ -14,34 +14,37 @@ import org.springframework.web.bind.annotation.RestController;
 import com.CentralLink.admin.config.CurrentUser;
 import com.CentralLink.admin.config.JdbcUserDetailsService;
 import com.CentralLink.admin.exception.RecordNotFoundException;
+import com.CentralLink.admin.exception.TokenRefreshException;
 import com.CentralLink.admin.model.auth.RefreshToken;
 import com.CentralLink.admin.model.auth.User;
 import com.CentralLink.admin.pojo.request.AuthenticationRequest;
+import com.CentralLink.admin.pojo.request.TokenRefreshRequest;
 import com.CentralLink.admin.pojo.response.AuthenticationResponse;
+import com.CentralLink.admin.pojo.response.TokenRefreshResponse;
 import com.CentralLink.admin.repositories.auth.UserRepo;
 import com.CentralLink.admin.service.auth.JwtUtil;
 import com.CentralLink.admin.service.auth.RefreshTokenService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 @Tag(name = "User Authentication", description = "APIs for User Authentication related operations")
 public class AuthController {
-	
-	
+
 	@Autowired
 	private UserRepo userRepo;
-	
+
 	@Autowired
 	private JdbcUserDetailsService jdbcUserDetailsService;
-	
+
 	@Autowired
 	private RefreshTokenService refreshTokenService;
-	
+
 	@Autowired
 	private JwtUtil jwtTokenUtil;
-	
+
 	@PostMapping(value = "/authenticate", produces = "application/json")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception {
@@ -56,7 +59,7 @@ public class AuthController {
 			try {
 				userDetails = jdbcUserDetailsService.loadUserByUsernameAndPass(authenticationRequest.getUsername(),
 						authenticationRequest.getPassword());
-				
+
 			} catch (Exception e) {
 				throw new RecordNotFoundException("Authentication Failed " + e.getMessage());
 			}
@@ -74,15 +77,22 @@ public class AuthController {
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping("/refreshtoken")
+	public ResponseEntity<?> refreshtoken(@RequestBody TokenRefreshRequest request) {
+		System.out.println("entered");
+		String requestRefreshToken = request.getRefreshToken();
+		System.out.println("before requestRefreshToken" + requestRefreshToken);
+		Optional<RefreshToken> refreshToken = refreshTokenService.findByToken(requestRefreshToken);
+		System.out.println("requestRefreshToken" + requestRefreshToken);
+		if (refreshToken.isPresent()) {
+			refreshTokenService.verifyExpiration(refreshToken.get());
+			String token = jwtTokenUtil
+					.generateToken(jdbcUserDetailsService.getCurrentUser(refreshToken.get().getUser()));
+			return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+		} else {
+			throw new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!");
+		}
+
+	}
+
 }
